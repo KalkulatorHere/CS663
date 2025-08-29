@@ -14,11 +14,9 @@ class ImageShrink:
         try:
             suit_img = ImageUtils.load_image("data/interp/suit.png")
             
-            # Shrink by factors of 2 and 3
             shrunk_d2 = ImageShrink.myImageShrink(suit_img, 2)
             shrunk_d3 = ImageShrink.myImageShrink(suit_img, 3)
             
-            # Display results
             fig, axes = plt.subplots(1, 3, figsize=(15, 5))
             
             im1 = axes[0].imshow(suit_img, cmap='gray', aspect='equal')

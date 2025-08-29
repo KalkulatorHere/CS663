@@ -11,15 +11,12 @@ class NearestNeighborInterpolation:
         
         for i in range(new_rows):
             for j in range(new_cols):
-                # Map new coordinates to original coordinates
                 orig_row = i * (M - 1) / (new_rows - 1)
                 orig_col = j * (N - 1) / (new_cols - 1)
                 
-                # Find nearest neighbor
                 row_idx = int(round(orig_row))
                 col_idx = int(round(orig_col))
                 
-                # Clamp to valid indices
                 row_idx = min(max(row_idx, 0), M - 1)
                 col_idx = min(max(col_idx, 0), N - 1)
                 
@@ -39,7 +36,6 @@ class NearestNeighborInterpolation:
             
             enlarged_nn = NearestNeighborInterpolation.myNearestNeighborInterpolation(random_img, new_rows, new_cols)
             
-            # Display results
             fig, axes = plt.subplots(1, 2, figsize=(12, 5))
             
             im1 = axes[0].imshow(random_img, cmap='jet', aspect='equal')

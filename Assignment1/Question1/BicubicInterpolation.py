@@ -22,11 +22,9 @@ class BicubicInterpolation:
         
         for i in range(new_rows):
             for j in range(new_cols):
-                # Map new coordinates to original coordinates
                 orig_row = i * (M - 1) / (new_rows - 1)
                 orig_col = j * (N - 1) / (new_cols - 1)
                 
-                # Find center of 4x4 neighborhood
                 center_row = int(np.floor(orig_row))
                 center_col = int(np.floor(orig_col))
                 
@@ -36,11 +34,9 @@ class BicubicInterpolation:
                         row_idx = center_row + m
                         col_idx = center_col + n
                         
-                        # Handle boundaries
                         row_idx = max(0, min(row_idx, M - 1))
                         col_idx = max(0, min(col_idx, N - 1))
                         
-                        # Calculate cubic weights
                         weight_row = BicubicInterpolation.cubic_kernel(orig_row - (center_row + m))
                         weight_col = BicubicInterpolation.cubic_kernel(orig_col - (center_col + n))
                         

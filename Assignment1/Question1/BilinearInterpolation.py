@@ -11,21 +11,17 @@ class BilinearInterpolation:
         
         for i in range(new_rows):
             for j in range(new_cols):
-                # Map new coordinates to original coordinates
                 orig_row = i * (M - 1) / (new_rows - 1)
                 orig_col = j * (N - 1) / (new_cols - 1)
                 
-                # Find surrounding pixels
                 row1 = int(np.floor(orig_row))
                 row2 = min(row1 + 1, M - 1)
                 col1 = int(np.floor(orig_col))
                 col2 = min(col1 + 1, N - 1)
                 
-                # Calculate weights
                 dr = orig_row - row1
                 dc = orig_col - col1
                 
-                # Bilinear interpolation
                 val = (1 - dr) * (1 - dc) * image[row1, col1] + \
                       dr * (1 - dc) * image[row2, col1] + \
                       (1 - dr) * dc * image[row1, col2] + \

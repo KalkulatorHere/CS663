@@ -14,21 +14,16 @@ class ImageRotation:
         
         for i in range(M):
             for j in range(N):
-                # Translate to center
                 y = i - center_row
                 x = j - center_col
                 
-                # Rotate coordinates (inverse rotation)
                 orig_x = x * np.cos(angle_rad) + y * np.sin(angle_rad)
                 orig_y = -x * np.sin(angle_rad) + y * np.cos(angle_rad)
                 
-                # Translate back
                 orig_row = orig_y + center_row
                 orig_col = orig_x + center_col
                 
-                # Check bounds
                 if 0 <= orig_row < M-1 and 0 <= orig_col < N-1:
-                    # Bilinear interpolation
                     row1 = int(np.floor(orig_row))
                     row2 = row1 + 1
                     col1 = int(np.floor(orig_col))
@@ -57,19 +52,15 @@ class ImageRotation:
         
         for i in range(M):
             for j in range(N):
-                # Translate to center
                 y = i - center_row
                 x = j - center_col
                 
-                # Rotate coordinates (inverse rotation)
                 orig_x = x * np.cos(angle_rad) + y * np.sin(angle_rad)
                 orig_y = -x * np.sin(angle_rad) + y * np.cos(angle_rad)
                 
-                # Translate back
                 orig_row = int(round(orig_y + center_row))
                 orig_col = int(round(orig_x + center_col))
                 
-                # Check bounds and assign
                 if 0 <= orig_row < M and 0 <= orig_col < N:
                     rotated[i, j] = image[orig_row, orig_col]
         
@@ -81,20 +72,17 @@ class ImageRotation:
         try:
             main_img = ImageUtils.load_image("data/interp/main.png", (200, 200), False)
             
-            # Create a sample image with a slanted line
             if main_img.shape == (200, 200):
                 for i in range(200):
                     for j in range(200):
                         if abs((j - 100) - 0.5 * (i - 100)) < 2:
                             main_img[i, j] = 255
             
-            # Estimate rotation angle needed
-            rotation_angle = 15  # degrees to make lamp post vertical
+            rotation_angle = 15  
             
             rotated_bilinear = ImageRotation.myImageRotationUsingBilinearInterp(main_img, rotation_angle)
             rotated_nn = ImageRotation.myImageRotationUsingNearestNeighborInterp(main_img, rotation_angle)
             
-            # Display results
             fig, axes = plt.subplots(1, 3, figsize=(15, 5))
             
             im1 = axes[0].imshow(main_img, cmap='gray', aspect='equal')

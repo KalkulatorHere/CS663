@@ -22,16 +22,13 @@ class CTInterpolationComparison:
                 original_ct = np.random.rand(100, 100) * 255
                 subsampled_ct = original_ct[::4, ::4]
             
-            # Get target size
             target_rows, target_cols = original_ct.shape
             sub_rows, sub_cols = subsampled_ct.shape
             
-            # Enlarge using all three methods
             enlarged_nn = NearestNeighborInterpolation.myNearestNeighborInterpolation(subsampled_ct, target_rows, target_cols)
             enlarged_bilinear = BilinearInterpolation.myBilinearInterpolation(subsampled_ct, target_rows, target_cols)
             enlarged_bicubic = BicubicInterpolation.myBicubicInterpolation(subsampled_ct, target_rows, target_cols)
             
-            # Calculate RMSE
             rmse_nn = ImageUtils.calculate_rmse(original_ct, enlarged_nn)
             rmse_bilinear = ImageUtils.calculate_rmse(original_ct, enlarged_bilinear)
             rmse_bicubic = ImageUtils.calculate_rmse(original_ct, enlarged_bicubic)
@@ -41,14 +38,11 @@ class CTInterpolationComparison:
             print(f"Bilinear: {rmse_bilinear:.4f}")
             print(f"Bicubic: {rmse_bicubic:.4f}")
             
-            # Display original and enlarged images
             fig, axes = plt.subplots(2, 4, figsize=(20, 10))
             
-            # Find common color limits for fair comparison
             vmin = min(original_ct.min(), enlarged_nn.min(), enlarged_bilinear.min(), enlarged_bicubic.min())
             vmax = max(original_ct.max(), enlarged_nn.max(), enlarged_bilinear.max(), enlarged_bicubic.max())
             
-            # Row 1: Original and enlarged images
             im1 = axes[0,0].imshow(original_ct, cmap='jet', aspect='equal', vmin=vmin, vmax=vmax)
             axes[0,0].set_title('Original CT')
             plt.colorbar(im1, ax=axes[0,0])
@@ -65,12 +59,10 @@ class CTInterpolationComparison:
             axes[0,3].set_title(f'Bicubic (RMSE: {rmse_bicubic:.2f})')
             plt.colorbar(im4, ax=axes[0,3])
             
-            # Row 2: Difference images
             diff_nn = original_ct - enlarged_nn
             diff_bilinear = original_ct - enlarged_bilinear
             diff_bicubic = original_ct - enlarged_bicubic
             
-            # Common limits for difference images
             diff_vmin = min(diff_nn.min(), diff_bilinear.min(), diff_bicubic.min())
             diff_vmax = max(diff_nn.max(), diff_bilinear.max(), diff_bicubic.max())
             
